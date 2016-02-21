@@ -1,0 +1,19 @@
+---
+- name: Configure continuous integration server
+  hosts: ci
+  vars:
+    java_packages:
+      - openjdk-8-jdk
+    solita_jenkins_plugins:
+      - git
+  pre_tasks:
+    - name: Add OpenJDK PPA (for Java 8)
+      apt_repository: repo="ppa:openjdk-r/ppa"
+  roles:
+    - solita.jenkins
+  tasks:
+    - name: Install Git
+      apt: name=git state=installed
+
+    - name: Install Maven
+      apt: name=maven state=installed

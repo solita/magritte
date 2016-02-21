@@ -1,0 +1,8 @@
+---
+- name: Configure backend server
+  hosts: backend
+  roles:
+    - geerlingguy.java
+  tasks:
+    - name: Install Monit
+      apt: name=monit state=installed

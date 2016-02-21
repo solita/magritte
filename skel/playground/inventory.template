@@ -1,0 +1,10 @@
+[backend]
+playground-backend
+
+[ci]
+playground-ci
+
+[db]
+playground-db
+
+# vim: ft=dosini
