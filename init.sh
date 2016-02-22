@@ -2,12 +2,15 @@
 set -eu
 
 script_dir="$(cd "$(dirname "$BASH_SOURCE")" && pwd)"
-sample_dir="$script_dir/samples"
+
+function samples {
+  find "$script_dir" -mindepth 1 -maxdepth 1 -type d -not \( -name common -or -name .git \) -printf '%P\n'
+}
 
 function list_available_samples {
   echo "Available samples:" >&2
-  for s in $(ls "$sample_dir"); do
-    echo "  - $s: $(cat "$sample_dir/$s/.description")"
+  for s in $(samples); do
+    echo "  - $s: $(cat "$script_dir/$s/.description")"
   done
 }
 
@@ -22,7 +25,7 @@ fi
 
 if [[ $# -gt 2 ]]; then
   sample="$3"
-  if [[ ! -d "$sample_dir/$sample" ]]; then
+  if [[ ! $(samples) =~ "$sample" ]]; then
     echo "Invalid sample: $sample" >&2
     echo >&2
     list_available_samples
@@ -37,8 +40,8 @@ project_dir="$2"
 mkdir -p "$project_dir"
 echo "$project_name" > "$project_dir/.project_name"
 
-cp -ir "$script_dir/skel/"* "$script_dir/skel/.util" "$project_dir"
-cp -ir "$sample_dir/$sample/"* "$project_dir"
+cp -ir "$script_dir/common/"* "$script_dir/common/.util" "$project_dir"
+cp -ir "$script_dir/$sample/"* "$project_dir"
 
 echo "Project $project_name created successfully!"
 echo
