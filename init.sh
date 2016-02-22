@@ -2,14 +2,18 @@
 set -eu
 
 script_dir="$(cd "$(dirname "$BASH_SOURCE")" && pwd)"
+samples="$(find "$script_dir" -mindepth 1 -maxdepth 1 -type d -not \( -name common -or -name .git \) -printf '%P\n')"
 
-function samples {
-  find "$script_dir" -mindepth 1 -maxdepth 1 -type d -not \( -name common -or -name .git \) -printf '%P\n'
+function in_list {
+  for x in $1; do
+    [[ "$x" == "$2" ]] && return 0
+  done
+  return 1
 }
 
 function list_available_samples {
   echo "Available samples:" >&2
-  for s in $(samples); do
+  for s in $samples; do
     echo "  - $s: $(cat "$script_dir/$s/.description")"
   done
 }
@@ -25,7 +29,7 @@ fi
 
 if [[ $# -gt 2 ]]; then
   sample="$3"
-  if [[ ! $(samples) =~ "$sample" ]]; then
+  if ! in_list "$samples" "$sample"; then
     echo "Invalid sample: $sample" >&2
     echo >&2
     list_available_samples
