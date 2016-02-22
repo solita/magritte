@@ -1,0 +1,11 @@
+---
+- name: Configure continuous integration server
+  hosts: ci
+  vars:
+    solita_jenkins_plugins:
+      - git
+  roles:
+    - solita.jenkins
+  tasks:
+    - name: Install Git
+      apt: name=git state=installed
