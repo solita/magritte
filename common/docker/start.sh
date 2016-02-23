@@ -2,4 +2,4 @@
 set -eu
 cd "$(dirname $BASH_SOURCE)"
 
-.util/in-ansible-container.sh ansible-playbook $@
+find . -mindepth 2 -name 'start.sh' -exec '{}' \;

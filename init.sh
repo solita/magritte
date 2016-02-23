@@ -42,10 +42,11 @@ fi
 project_name="$1"
 project_dir="$2"
 mkdir -p "$project_dir"
-echo "$project_name" > "$project_dir/.project_name"
+echo "$project_name" > "$project_dir/.project-name"
 
 cp -ir "$script_dir/common/"* "$script_dir/common/.util" "$project_dir"
 cp -ir "$script_dir/$sample/"* "$project_dir"
+sed -e "s/PROJECT/$project_name/g" "$script_dir/$sample/playground/inventory.template" >"$project_dir/playground/inventory.template"
 
 echo "Project $project_name created successfully!"
 echo
@@ -57,7 +58,7 @@ echo "        cd $project_dir"
 echo
 echo ' 2. Start the playground containers:'
 echo
-echo '        playground/start.sh'
+echo '        docker/start.sh'
 echo
 echo " 3. Configure the playground:"
 echo

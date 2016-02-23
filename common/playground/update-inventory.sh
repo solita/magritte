@@ -1,6 +1,8 @@
 #!/bin/bash
 set -eu
 cd "$(dirname $BASH_SOURCE)"
+source ../.util/docker.sh
+source ../.util/project.sh
 
 echo 'Updating inventory...'
 echo '###############################################################################' > inventory
@@ -17,8 +19,11 @@ echo '#     playground/update-inventory.sh                                      
 echo '#                                                                             #' >> inventory
 echo '###############################################################################' >> inventory
 echo >> inventory
-for h in $(ls ../docker/playground-hosts); do
-  echo "$h ansible_user=root ansible_host=$(docker inspect -f "{{ .NetworkSettings.IPAddress }}" $h) ansible_ssh_extra_args=\"-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no\"" >> inventory
+for d in $(find ../docker -mindepth 1 -type d -and -not -name ansible -printf '%P\n'); do
+  name="$project_name-$d"
+  if container_running "$name"; then
+    echo "$name ansible_user=root ansible_host=$(docker inspect -f "{{ .NetworkSettings.IPAddress }}" $name) ansible_ssh_extra_args=\"-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no\"" >> inventory
+  fi
 done
 echo >> inventory
 cat inventory.template >> inventory
