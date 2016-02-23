@@ -1,1 +1,1 @@
-FROM playground-base
+FROM PROJECT-common

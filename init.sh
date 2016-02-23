@@ -48,6 +48,11 @@ cp -ir "$script_dir/common/"* "$script_dir/common/.util" "$project_dir"
 cp -ir "$script_dir/$sample/"* "$project_dir"
 sed -e "s/PROJECT/$project_name/g" "$script_dir/$sample/playground/inventory.template" >"$project_dir/playground/inventory.template"
 
+for d in "$script_dir/$sample/docker/"*; do
+  name="$(basename $d)"
+  sed -e "s/PROJECT/$project_name/g" "$script_dir/$sample/docker/$name/Dockerfile" >"$project_dir/docker/$name/Dockerfile"
+done
+
 echo "Project $project_name created successfully!"
 echo
 echo 'Next steps:'
