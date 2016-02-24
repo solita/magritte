@@ -2,4 +2,8 @@
 set -eu
 cd "$(dirname $BASH_SOURCE)"
 
-find . -mindepth 2 -name 'destroy.sh' -exec '{}' \;
+for d in */; do
+  if [[ -f "${d}destroy.sh" ]]; then
+    "${d}destroy.sh"
+  fi
+done

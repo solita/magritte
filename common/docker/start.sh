@@ -2,4 +2,8 @@
 set -eu
 cd "$(dirname $BASH_SOURCE)"
 
-find . -mindepth 2 -name 'start.sh' -exec '{}' \;
+for d in */; do
+  if [[ -f "${d}start.sh" ]]; then
+    "${d}start.sh"
+  fi
+done

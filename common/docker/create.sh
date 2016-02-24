@@ -2,4 +2,8 @@
 set -eu
 cd "$(dirname $BASH_SOURCE)"
 
-find . -mindepth 2 -name 'create.sh' -exec '{}' \;
+for d in */; do
+  if [[ -f "${d}create.sh" ]]; then
+    "${d}create.sh"
+  fi
+done
