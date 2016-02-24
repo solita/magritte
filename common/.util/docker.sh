@@ -3,9 +3,9 @@ function image_exists {
 }
 
 function container_exists {
-  [[ -n "$(docker ps -aqf "name=$1")" ]]
+  [[ -n "$(docker ps -aqf "name=$1" 2>/dev/null)" ]]
 }
 
 function container_running {
-  [[ -n "$(docker ps -qf "name=$1")" ]]
+  [[ -n "$(docker ps -qf "name=$1" 2>/dev/null)" ]]
 }
