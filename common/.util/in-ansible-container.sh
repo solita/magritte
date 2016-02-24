@@ -2,16 +2,18 @@
 set -eu
 cd "$(dirname $BASH_SOURCE)"
 
+source docker.sh
 source project.sh
 
 ../docker/ansible/start.sh
 
-container_ip="$(docker inspect -f "{{ .NetworkSettings.IPAddress }}" $project_name-ansible)"
 ssh \
   -o UserKnownHostsFile=/dev/null \
   -o StrictHostKeyChecking=no \
-  -o LogLevel=quiet \
+  -o LogLevel=ERROR \
   -t \
   -A \
-  ansible@$container_ip \
-  "cd /project && $@"
+  ansible@$(docker_host_ip) \
+  -p 10022 \
+  "cd /project && $@" \
+  2>&1 | grep -vF "Connection to $(docker_host_ip) closed."
