@@ -10,11 +10,15 @@ fi
 
 project_dir="$1"
 
-if [[ ! -f "$project_dir/.project-name" ]]; then
+if [[ ! -d "$project_dir/.pipeline-template" ]]; then
   echo "The directory '$project_dir' does not look like a pipeline-template project. Not upgrading." >&2
   exit 1
 fi
 
-cp -r "$script_dir/common/"* "$script_dir/common/.util" "$project_dir"
+project_name="$(cat "$project_dir/.pipeline-template/project-name")"
 
-echo "Project $(cat "$project_dir/.project-name") upgraded successfully!"
+source "$script_dir/.project-util.sh"
+copy_project_directory "$script_dir/core" "$project_dir"
+copy_project_directory "$script_dir/core/.pipeline-template" "$project_dir/.pipeline-template"
+
+echo "Project $project_name upgraded successfully!"

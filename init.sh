@@ -74,17 +74,10 @@ if [[ -d "$project_dir" ]]; then
   fi
 fi
 
-mkdir -p "$project_dir"
-echo "$project_name" > "$project_dir/.project-name"
-
-cp -ir "$script_dir/common/"* "$script_dir/common/.util" "$project_dir"
-cp -ir "$script_dir/$sample/"* "$project_dir"
-sed -e "s/PROJECT/$project_name/g" "$script_dir/$sample/playground/inventory.template" >"$project_dir/playground/inventory.template"
-
-for d in "$script_dir/$sample/docker/"*; do
-  name="$(basename $d)"
-  sed -e "s/PROJECT/$project_name/g" "$script_dir/$sample/docker/$name/Dockerfile" >"$project_dir/docker/$name/Dockerfile"
-done
+source "$script_dir/.project-util.sh"
+copy_project_directory "$script_dir/core" "$project_dir"
+copy_project_directory "$script_dir/core/.pipeline-template" "$project_dir/.pipeline-template"
+copy_project_directory "$script_dir/$sample" "$project_dir"
 
 echo "Project $project_name created successfully!"
 echo
