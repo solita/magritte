@@ -13,6 +13,6 @@ ssh \
   -t \
   -A \
   ansible@$(docker_host_ip) \
-  -p 10022 \
+  -p $(cat ../ansible-ssh-port) \
   "cd /project && $@" \
   2>&1 | grep -vF "Connection to $(docker_host_ip) closed."

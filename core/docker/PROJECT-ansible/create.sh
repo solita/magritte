@@ -16,7 +16,7 @@ if ! container_exists "$name"; then
   echo "Creating container $name..."
   docker create --name $name \
     -v "$(cd ../.. && pwd):/project" \
-    -p 10022:22 \
+    -p $(cat ../../.pipeline-template/ansible-ssh-port):22 \
     $name \
     >/dev/null
 fi
