@@ -13,9 +13,14 @@ function in_list {
 
 function list_available_samples {
   echo "Available samples:" >&2
-  for s in $samples; do
-    echo "  - $s: $(cat "$script_dir/$s/.description")"
-  done
+  (
+    cd "$script_dir"
+    for s in *; do
+      if [[ -d "$s" && "$s" != 'core' ]]; then
+        echo "  - $s: $(cat "$script_dir/$s/.description")"
+      fi
+    done
+  )
 }
 
 if [[ $# -lt 2 ]]; then
