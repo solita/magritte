@@ -2,17 +2,16 @@
 set -eu
 cd "$(dirname $BASH_SOURCE)"
 
-source docker.sh
-
 ../../docker/PROJECT-ansible/start.sh
 
+docker_host="$(../../docker/host)"
 ssh \
   -o UserKnownHostsFile=/dev/null \
   -o StrictHostKeyChecking=no \
   -o LogLevel=ERROR \
   -t \
   -A \
-  ansible@$(docker_host_ip) \
+  "ansible@$docker_host" \
   -p $(cat ../ansible-ssh-port) \
   "cd /project && $@" \
-  2>&1 | grep -vF "Connection to $(docker_host_ip) closed."
+  2>&1 | grep -vF "Connection to $docker_host closed."

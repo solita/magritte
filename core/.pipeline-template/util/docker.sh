@@ -9,11 +9,3 @@ function container_exists {
 function container_running {
   [[ -n "$(docker ps -qf "name=$1" 2>/dev/null)" ]]
 }
-
-function docker_host_ip {
-  if [[ -n "${DOCKER_MACHINE_NAME:-}" ]]; then
-    docker-machine ip $DOCKER_MACHINE_NAME
-  else
-    echo 127.0.0.1
-  fi
-}
