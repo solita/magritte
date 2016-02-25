@@ -5,6 +5,7 @@ cd "$(dirname $BASH_SOURCE)"
 ../../docker/PROJECT-ansible/start.sh
 
 docker_host="$(../../docker/host)"
+ansible_ssh_port="$(../../docker/port PROJECT-ansible 22 | sed -e 's/.\+://')"
 ssh \
   -o UserKnownHostsFile=/dev/null \
   -o StrictHostKeyChecking=no \
@@ -12,6 +13,6 @@ ssh \
   -t \
   -A \
   "ansible@$docker_host" \
-  -p $(cat ../ansible-ssh-port) \
+  -p "$ansible_ssh_port" \
   "cd /project && $@" \
   2>&1 | grep -vF "Connection to $docker_host closed."

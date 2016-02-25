@@ -23,3 +23,5 @@ USER root
 
 COPY requirements.yml /tmp/
 RUN ansible-galaxy install -r /tmp/requirements.yml && rm /tmp/requirements.yml
+
+EXPOSE 22

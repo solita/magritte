@@ -15,6 +15,7 @@ fi
 if ! container_exists "$name"; then
   echo "Creating container $name..."
   docker create --name $name \
+    -P \
     $name \
     >/dev/null
 fi
