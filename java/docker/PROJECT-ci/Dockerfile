@@ -1,1 +1,2 @@
 FROM PROJECT-common
+EXPOSE 8080
