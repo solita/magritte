@@ -100,3 +100,7 @@ echo " 3. Configure the playground:"
 echo
 echo '        ./ansible-playbook site.yml'
 echo
+echo " 4. See where you can access your services:"
+echo
+echo '        docker/port'
+echo
