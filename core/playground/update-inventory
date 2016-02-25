@@ -14,7 +14,7 @@ echo '#     playground/inventory.template                                       
 echo '#                                                                             #' >> inventory
 echo '# Then run:                                                                   #' >> inventory
 echo '#                                                                             #' >> inventory
-echo '#     playground/update-inventory.sh                                          #' >> inventory
+echo '#     playground/update-inventory                                             #' >> inventory
 echo '#                                                                             #' >> inventory
 echo '###############################################################################' >> inventory
 echo >> inventory

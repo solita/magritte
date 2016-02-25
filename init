@@ -94,7 +94,7 @@ echo "        cd $project_dir"
 echo
 echo ' 2. Start the playground containers:'
 echo
-echo '        docker/start.sh'
+echo '        docker/start'
 echo
 echo " 3. Configure the playground:"
 echo
