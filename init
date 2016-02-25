@@ -23,29 +23,25 @@ function list_available_samples {
   )
 }
 
-if [[ $# -lt 2 ]]; then
-  echo "Usage: $0 NAME DIR [SAMPLE]" >&2
+if [[ $# -eq 0 ]]; then
+  echo "Usage: $0 SAMPLE [DIR] [NAME]" >&2
   echo >&2
-  echo "SAMPLE defaults to 'empty'." >&2
+  echo "DIR defaults to the current directory. NAME defaults to DIR's name." >&2
   echo >&2
   list_available_samples
   exit 1
 fi
 
-if [[ $# -gt 2 ]]; then
-  sample="$3"
-  if ! in_list "$samples" "$sample"; then
-    echo "Invalid sample: $sample" >&2
-    echo >&2
-    list_available_samples
-    exit 1
-  fi
-else
-  sample='empty'
+sample="$1"
+
+if ! in_list "$samples" "$sample"; then
+  echo "Invalid sample: $sample" >&2
+  echo >&2
+  list_available_samples
+  exit 1
 fi
 
-project_name="$1"
-project_dir="$2"
+project_dir="${2:-.}"
 parent_dir="$(dirname "$project_dir")"
 
 for dir in "$project_dir" "$parent_dir"; do
@@ -71,13 +67,17 @@ if in_list "$samples" "$project_dir"; then
   fi
 fi
 
-if [[ -d "$project_dir" ]]; then
-  read -p "The directory '$project_dir' already exists! Are you sure you want to create a new pipeline project there? [yN] " -n 1 -r >&2
+if [[ -d "$project_dir" && -n "$(ls -A "$project_dir")" ]]; then
+  read -p "The directory '$(cd "$project_dir" && pwd)' is not empty! Are you sure you want to create a new pipeline project there? [yN] " -n 1 -r >&2
   echo >&2
   if [[ ! $REPLY =~ ^[Yy]$ ]]; then
     exit 1
   fi
+else
+  mkdir -p "$project_dir"
 fi
+
+project_name="${3:-$(basename "$(cd "$project_dir" && pwd)")}"
 
 source "$script_dir/.project-util.sh"
 copy_project_directory "$script_dir/core" "$project_dir"

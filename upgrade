@@ -3,12 +3,7 @@ set -eu
 
 script_dir="$(cd "$(dirname "$BASH_SOURCE")" && pwd)"
 
-if [[ $# -lt 1 ]]; then
-  echo "Usage: $0 DIR" >&2
-  exit 1
-fi
-
-project_dir="$1"
+project_dir="${1:-.}"
 
 if [[ ! -d "$project_dir/.pipeline-template" ]]; then
   echo "The directory '$project_dir' does not look like a pipeline-template project. Not upgrading." >&2
