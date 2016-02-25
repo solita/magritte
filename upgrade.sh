@@ -19,6 +19,6 @@ project_name="$(cat "$project_dir/.pipeline-template/project-name")"
 
 source "$script_dir/.project-util.sh"
 copy_project_directory "$script_dir/core" "$project_dir"
-copy_project_directory "$script_dir/core/.pipeline-template" "$project_dir/.pipeline-template"
+copy_project_directory "$script_dir/core/.pipeline-template/util" "$project_dir/.pipeline-template/util"
 
 echo "Project $project_name upgraded successfully!"
