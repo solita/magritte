@@ -1,6 +1,6 @@
 #!/bin/bash
 set -eu
-cd "$(dirname $BASH_SOURCE)"
+cd "$(dirname "$BASH_SOURCE")"
 
 source ../.pipeline-template/util/docker.sh
 
