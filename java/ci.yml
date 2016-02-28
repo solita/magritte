@@ -1,19 +1,33 @@
 ---
 - name: Configure continuous integration server
   hosts: ci
+
   vars:
     java_packages:
       - openjdk-8-jdk
     solita_jenkins_plugins:
       - git
+      - copyartifact
+      - ansible
+
   pre_tasks:
     - name: Add OpenJDK PPA (for Java 8)
       apt_repository: repo="ppa:openjdk-r/ppa"
+
   roles:
     - solita.jenkins
+
   tasks:
     - name: Install Git
       apt: name=git state=installed
+
+    - name: Configure Git for the Jenkins user
+      become: yes
+      become_user: jenkins
+      command: "git config --global '{{ item.k }}' '{{ item.v }}'"
+      with_items:
+        - { k: user.name, v: Jenkins }
+        - { k: user.email, v: jenkins@example.com }
 
     - name: Install Maven
       apt: name=maven state=installed
