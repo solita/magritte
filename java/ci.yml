@@ -9,6 +9,8 @@
       - git
       - copyartifact
       - ansible
+    remote_pipeline_root_dir: "/var/lib/jenkins/pipelines"
+    remote_pipeline_dir: "{{ remote_pipeline_root_dir }}/{{ lookup('file', playbook_dir + '/.pipeline-template/project-name/') }}"
 
   pre_tasks:
     - name: Add OpenJDK PPA (for Java 8)
@@ -31,3 +33,18 @@
 
     - name: Install Maven
       apt: name=maven state=installed
+
+    - name: Make pipeline files available to Jenkins jobs
+      copy:
+        src: "{{ playbook_dir }}/"
+        dest: "{{ remote_pipeline_dir }}"
+      tags: pipeline_files
+
+    - name: Fix permissions of the pipeline files
+      file:
+        dest: "{{ remote_pipeline_root_dir }}"
+        recurse: yes
+        owner: jenkins
+        group: jenkins
+        mode: ug+rwX,o=
+      tags: pipeline_files
