@@ -23,6 +23,15 @@
     - name: Install Git
       apt: name=git state=installed
 
+    - name: Install Python development tools (for Ansible)
+      apt: name={{ item }} state=installed
+      with_items:
+        - python-pip
+        - python-dev
+
+    - name: Install Ansible
+      pip: name=ansible version=2.0.0.2
+
     - name: Configure Git for the Jenkins user
       become: yes
       become_user: jenkins
