@@ -1,8 +1,23 @@
 ---
 - name: Configure backend server
   hosts: backend
+
+  vars:
+    java_packages:
+      - openjdk-8-jdk
+
+  pre_tasks:
+    - name: Add OpenJDK PPA (for Java 8)
+      apt_repository: repo="ppa:openjdk-r/ppa"
+
   roles:
     - geerlingguy.java
+
   tasks:
-    - name: Install Monit
-      apt: name=monit state=installed
+    - include_vars: app_vars.yml
+
+    - name: Create the application user and directory
+      user:
+        name: "{{ app_user }}"
+        home: "{{ app_dir }}"
+        system: yes
