@@ -1,9 +1,12 @@
+APP_ARTIFACTS = ['target/hello.jar', 'start', 'stop']
+
 job('build') {
     scm {
         git {
             remote {
                 url('https://github.com/noidi/hello-java.git')
             }
+            branch('master')
             clean()
         }
     }
@@ -17,7 +20,7 @@ job('build') {
     publishers {
         archiveJunit('target/failsafe-reports/*.xml')
         archiveArtifacts {
-            pattern('target/hello.jar')
+            APP_ARTIFACTS.collect { pattern(it) }
             onlyIfSuccessful()
         }
         downstream('deploy', 'SUCCESS')
@@ -30,7 +33,7 @@ job('deploy') {
             buildSelector() {
                 upstreamBuild(fallback=true)
             }
-            includePatterns('target/hello.jar')
+            includePatterns(*APP_ARTIFACTS)
             flatten()
         }
     }
