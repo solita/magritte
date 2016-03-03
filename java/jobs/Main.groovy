@@ -26,6 +26,7 @@ job('build') {
         scm('*/15 * * * *')
     }
     steps {
+        shell('echo $BUILD_NUMBER > src/main/resources/build.txt')
         shell('mvn package')
         shell('mvn verify')
     }
