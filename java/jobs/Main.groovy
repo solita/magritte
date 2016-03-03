@@ -1,6 +1,18 @@
 APP_ARTIFACTS = ['target/hello.jar', 'start', 'stop']
 
+deliveryPipelineView('Pipeline') {
+    enableManualTriggers(true)
+    showAggregatedPipeline(true)
+    pipelines() {
+        component('Hello', 'build')
+    }
+}
+
 job('build') {
+    deliveryPipelineConfiguration("Build", "Build")
+    wrappers {
+        deliveryPipelineVersion('build \$BUILD_NUMBER', true)
+    }
     scm {
         git {
             remote {
@@ -23,11 +35,15 @@ job('build') {
             APP_ARTIFACTS.collect { pattern(it) }
             onlyIfSuccessful()
         }
-        downstream('deploy', 'SUCCESS')
+        downstream('deploy-dev', 'SUCCESS')
     }
 }
 
-job('deploy') {
+job('deploy-dev') {
+    deliveryPipelineConfiguration("Dev", "Deploy")
+    wrappers {
+        buildName('\$PIPELINE_VERSION')
+    }
     steps {
         copyArtifacts('build') {
             buildSelector() {
