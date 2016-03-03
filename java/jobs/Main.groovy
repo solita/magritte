@@ -46,6 +46,9 @@ job('deploy-dev') {
         buildName('\$PIPELINE_VERSION')
     }
     steps {
+        // Don't fail the build even if rsync fails (it's probably because some
+        // files are missing the o+r permission).
+        shell('rsync -av /project/* . || true')
         copyArtifacts('build') {
             buildSelector() {
                 upstreamBuild(fallback=true)
@@ -53,9 +56,78 @@ job('deploy-dev') {
             includePatterns(*APP_ARTIFACTS)
             flatten()
         }
+        shell('ansible-playbook -l dev deploy.yml')
+    }
+    publishers {
+        buildPipelineTrigger('deploy-test') {
+        }
+    }
+}
+
+job('deploy-test') {
+    deliveryPipelineConfiguration("Test", "Deploy")
+    wrappers {
+        buildName('\$PIPELINE_VERSION')
+    }
+    steps {
         // Don't fail the build even if rsync fails (it's probably because some
         // files are missing the o+r permission).
         shell('rsync -av /project/* . || true')
-        shell('ansible-playbook -l dev deploy.yml')
+        copyArtifacts('build') {
+            buildSelector() {
+                upstreamBuild(fallback=true)
+            }
+            includePatterns(*APP_ARTIFACTS)
+            flatten()
+        }
+        shell('ansible-playbook -l test deploy.yml')
+    }
+    publishers {
+        buildPipelineTrigger('deploy-staging') {
+        }
+    }
+}
+
+job('deploy-staging') {
+    deliveryPipelineConfiguration("Staging", "Deploy")
+    wrappers {
+        buildName('\$PIPELINE_VERSION')
+    }
+    steps {
+        // Don't fail the build even if rsync fails (it's probably because some
+        // files are missing the o+r permission).
+        shell('rsync -av /project/* . || true')
+        copyArtifacts('build') {
+            buildSelector() {
+                upstreamBuild(fallback=true)
+            }
+            includePatterns(*APP_ARTIFACTS)
+            flatten()
+        }
+        shell('ansible-playbook -l staging deploy.yml')
+    }
+    publishers {
+        buildPipelineTrigger('deploy-prod') {
+        }
+    }
+}
+
+job('deploy-prod') {
+    deliveryPipelineConfiguration("Prod", "Deploy")
+    wrappers {
+        buildName('\$PIPELINE_VERSION')
+    }
+    steps {
+        // Don't fail the build even if rsync fails (it's probably because some
+        // files are missing the o+r permission).
+        shell('rsync -av /project/* . || true')
+        copyArtifacts('build') {
+            buildSelector() {
+                upstreamBuild(fallback=true)
+            }
+            includePatterns(*APP_ARTIFACTS)
+            flatten()
+        }
+        shell('ansible-playbook -l prod deploy.yml')
     }
 }
