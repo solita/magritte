@@ -20,9 +20,6 @@
     - solita.jenkins
 
   tasks:
-    - name: Install Git
-      apt: name=git state=installed
-
     - name: Install Python development tools (for Ansible)
       apt: name={{ item }} state=installed
       with_items:
@@ -32,7 +29,10 @@
     - name: Install Ansible
       pip: name=ansible version=2.0.0.2
 
-    - name: Configure Git for the Jenkins user
+    - name: Install Git
+      apt: name=git state=installed
+
+    - name: Configure Git for Jenkins
       become: yes
       become_user: jenkins
       command: "git config --global '{{ item.k }}' '{{ item.v }}'"
@@ -43,17 +43,18 @@
     - name: Install Maven
       apt: name=maven state=installed
 
-    - name: Make pipeline files available to Jenkins jobs
-      copy:
-        src: "{{ playbook_dir }}/"
-        dest: "{{ remote_pipeline_dir }}"
-      tags: pipeline_files
+    - name: Generate SSH key for Jenkins
+      user: name=jenkins generate_ssh_key=yes
 
-    - name: Fix permissions of the pipeline files
-      file:
-        dest: "{{ remote_pipeline_root_dir }}"
-        recurse: yes
-        owner: jenkins
-        group: jenkins
-        mode: ug+rwX,o=
-      tags: pipeline_files
+    - name: Fetch Jenkins' public key
+      fetch:
+        src: /var/lib/jenkins/.ssh/id_rsa.pub
+        dest: jenkins_id_rsa.pub
+        flat: yes
+
+- hosts: ci_root_access
+  tasks:
+    - name: Give Jenkins root access to other hosts
+      authorized_key: "user=root key='{{ item }}'"
+      with_file:
+        - jenkins_id_rsa.pub

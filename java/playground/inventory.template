@@ -7,4 +7,9 @@ PROJECT-ci
 [db]
 PROJECT-db
 
+[ci_root_access]
+PROJECT-backend
+PROJECT-ci
+PROJECT-db
+
 # vim: ft=dosini
