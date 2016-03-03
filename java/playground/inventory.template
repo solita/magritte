@@ -1,15 +1,43 @@
-[backend]
-PROJECT-backend
-
 [ci]
 PROJECT-ci
 
+[app]
+PROJECT-app-dev
+PROJECT-app-test
+PROJECT-app-staging
+PROJECT-app-prod
+
 [db]
-PROJECT-db
+PROJECT-db-dev
+PROJECT-db-test
+PROJECT-db-staging
+PROJECT-db-prod
+
+[dev]
+PROJECT-app-dev
+PROJECT-db-dev
+
+[test]
+PROJECT-app-test
+PROJECT-db-test
+
+[staging]
+PROJECT-app-staging
+PROJECT-db-staging
+
+[prod]
+PROJECT-app-prod
+PROJECT-db-prod
 
 [ci_root_access]
-PROJECT-backend
 PROJECT-ci
-PROJECT-db
+PROJECT-app-dev
+PROJECT-app-test
+PROJECT-app-staging
+PROJECT-app-prod
+PROJECT-db-dev
+PROJECT-db-test
+PROJECT-db-staging
+PROJECT-db-prod
 
 # vim: ft=dosini

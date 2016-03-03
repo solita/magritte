@@ -1,5 +1,5 @@
 ---
-- hosts: backend
+- hosts: app
 
   tasks:
     - include_vars: app_vars.yml

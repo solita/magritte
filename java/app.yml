@@ -1,6 +1,6 @@
 ---
-- name: Configure backend server
-  hosts: backend
+- name: Configure app servers
+  hosts: app
 
   vars:
     java_packages:

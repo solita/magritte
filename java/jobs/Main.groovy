@@ -55,6 +55,6 @@ job('deploy-dev') {
         // Don't fail the build even if rsync fails (it's probably because some
         // files are missing the o+r permission).
         shell('rsync /project/* . || true')
-        shell('ansible-playbook deploy.yml')
+        shell('ansible-playbook -l dev deploy.yml')
     }
 }
