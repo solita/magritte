@@ -1,5 +1,3 @@
-APP_ARTIFACTS = ['target/hello.jar', 'start', 'stop']
-
 deliveryPipelineView('Pipeline') {
     enableManualTriggers(true)
     showAggregatedPipeline(true)
@@ -33,7 +31,9 @@ job('build') {
     publishers {
         archiveJunit('target/failsafe-reports/*.xml')
         archiveArtifacts {
-            APP_ARTIFACTS.collect { pattern(it) }
+            pattern('target/hello.jar')
+            pattern('start')
+            pattern('stop')
             onlyIfSuccessful()
         }
         downstream('deploy-dev', 'SUCCESS')
@@ -53,7 +53,7 @@ job('deploy-dev') {
             buildSelector() {
                 upstreamBuild(fallback=true)
             }
-            includePatterns(*APP_ARTIFACTS)
+            includePatterns('target/hello.jar', 'start', 'stop')
             flatten()
         }
         shell('ansible-playbook -l dev deploy.yml')
@@ -77,7 +77,7 @@ job('deploy-test') {
             buildSelector() {
                 upstreamBuild(fallback=true)
             }
-            includePatterns(*APP_ARTIFACTS)
+            includePatterns('target/hello.jar', 'start', 'stop')
             flatten()
         }
         shell('ansible-playbook -l test deploy.yml')
@@ -101,7 +101,7 @@ job('deploy-staging') {
             buildSelector() {
                 upstreamBuild(fallback=true)
             }
-            includePatterns(*APP_ARTIFACTS)
+            includePatterns('target/hello.jar', 'start', 'stop')
             flatten()
         }
         shell('ansible-playbook -l staging deploy.yml')
@@ -125,7 +125,7 @@ job('deploy-prod') {
             buildSelector() {
                 upstreamBuild(fallback=true)
             }
-            includePatterns(*APP_ARTIFACTS)
+            includePatterns('target/hello.jar', 'start', 'stop')
             flatten()
         }
         shell('ansible-playbook -l prod deploy.yml')
