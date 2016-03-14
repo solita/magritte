@@ -6,8 +6,8 @@ job('DeployTest') {
     wrappers {
         buildName('$PIPELINE_VERSION')
     }
+    Pipeline.checkOut(delegate)
     steps {
-        Pipeline.checkOut(delegate)
         Build.copyArtifacts(delegate)
         shell('ansible-playbook -l test deploy.yml')
     }
