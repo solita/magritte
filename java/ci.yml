@@ -27,9 +27,36 @@
       with_items:
         - python-pip
         - python-dev
+      tags: ansible
 
     - name: Install Ansible
       pip: name=ansible version=2.0.0.2
+      tags: ansible
+
+    - name: Create Ansible configuration directory
+      file:
+        path: /etc/ansible
+        state: directory
+      tags: ansible
+
+    - name: Copy requirements.yml
+      copy:
+        src: requirements.yml
+        dest: /etc/ansible/requirements.yml
+      register: requirements_yml
+      tags: ansible
+
+    - name: Remove old Ansible plugins
+      file:
+        path: /etc/ansible/roles
+        state: absent
+      when: requirements_yml | changed
+      tags: ansible
+
+    - name: Install Ansible plugins
+      shell: ansible-galaxy install -r /etc/ansible/requirements.yml
+      when: requirements_yml | changed
+      tags: ansible
 
     - name: Install Git
       apt: name=git state=installed
