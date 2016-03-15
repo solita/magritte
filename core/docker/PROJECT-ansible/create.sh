@@ -9,6 +9,7 @@ name="$(basename "$(pwd)")"
 if ! image_exists "$name"; then
   echo "Building image $name..."
   cp ~/.ssh/id_rsa.pub .
+  cp ../../requirements.yml .
   docker build -t $name .
 fi
 
