@@ -1,7 +1,7 @@
 job('Build') {
     deliveryPipelineConfiguration('Build', 'Build')
     wrappers {
-        deliveryPipelineVersion('build $BUILD_NUMBER', true)
+        deliveryPipelineVersion('build #$BUILD_NUMBER', true)
     }
     scm {
         git {

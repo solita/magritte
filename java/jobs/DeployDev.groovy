@@ -1,4 +1,3 @@
-import util.Build;
 import util.Pipeline;
 
 job('DeployDev') {
@@ -8,7 +7,13 @@ job('DeployDev') {
     }
     Pipeline.checkOut(delegate)
     steps {
-        Build.copyArtifacts(delegate)
+        copyArtifacts('Build') {
+            buildSelector() {
+                upstreamBuild(true)
+            }
+            includePatterns('**/*')
+            flatten()
+        }
         shell('ansible-playbook -l dev deploy.yml')
     }
     publishers {
