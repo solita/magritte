@@ -1,3 +1,4 @@
+import util.AnsibleVars;
 import util.Pipeline;
 
 job('DeployStaging') {
@@ -14,7 +15,7 @@ job('DeployStaging') {
             includePatterns('**/*')
             flatten()
         }
-        shell('ansible-playbook -l staging deploy.yml')
+        shell("ansible-playbook -i '${AnsibleVars.INVENTORY_FILE}' -l staging deploy.yml")
     }
     publishers {
         buildPipelineTrigger('DeployProd')
