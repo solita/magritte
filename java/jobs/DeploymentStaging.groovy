@@ -1,8 +1,8 @@
 import util.AnsibleVars;
 import util.Pipeline;
 
-job('DeployProd') {
-    deliveryPipelineConfiguration('Prod', 'Deploy')
+job('StagingDeploy') {
+    deliveryPipelineConfiguration('Staging Env', 'Deploy')
     wrappers {
         buildName('$PIPELINE_VERSION')
     }
@@ -15,6 +15,9 @@ job('DeployProd') {
             includePatterns('**/*')
             flatten()
         }
-        shell("ansible-playbook -i '${AnsibleVars.INVENTORY_FILE}' -l prod deploy.yml")
+        shell("ansible-playbook -i '${AnsibleVars.INVENTORY_FILE}' -l staging deploy.yml")
+    }
+    publishers {
+        buildPipelineTrigger('ProdDeploy')
     }
 }

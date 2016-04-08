@@ -3,6 +3,6 @@ deliveryPipelineView('Deployment Pipeline') {
     allowRebuild(true)
     showAggregatedPipeline(true)
     pipelines {
-        component('App', 'Build')
+        component('App', 'CIBuild')
     }
 }

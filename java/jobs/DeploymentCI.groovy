@@ -1,5 +1,5 @@
-job('Build') {
-    deliveryPipelineConfiguration('Build', 'Build')
+job('CIBuild') {
+    deliveryPipelineConfiguration('CI Env', 'Build')
     wrappers {
         deliveryPipelineVersion('build #$BUILD_NUMBER', true)
     }
@@ -28,6 +28,6 @@ job('Build') {
             pattern('stop')
             onlyIfSuccessful()
         }
-        downstream('DeployDev', 'SUCCESS')
+        downstream('DevDeploy', 'SUCCESS')
     }
 }

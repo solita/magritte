@@ -1,8 +1,8 @@
 import util.AnsibleVars;
 import util.Pipeline;
 
-job('DeployTest') {
-    deliveryPipelineConfiguration('Test', 'Deploy')
+job('TestDeploy') {
+    deliveryPipelineConfiguration('Test Env', 'Deploy')
     wrappers {
         buildName('$PIPELINE_VERSION')
     }
@@ -18,6 +18,6 @@ job('DeployTest') {
         shell("ansible-playbook -i '${AnsibleVars.INVENTORY_FILE}' -l test deploy.yml")
     }
     publishers {
-        buildPipelineTrigger('DeployStaging')
+        buildPipelineTrigger('StagingDeploy')
     }
 }

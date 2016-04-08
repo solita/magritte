@@ -1,7 +1,7 @@
 import util.AnsibleVars;
 
-job('ProvisionStaging') {
-    deliveryPipelineConfiguration('Staging', 'Provision')
+job('ProvisionDev') {
+    deliveryPipelineConfiguration('Dev Env', 'Provision')
     wrappers {
         buildName('$PIPELINE_VERSION')
     }
@@ -12,9 +12,9 @@ job('ProvisionStaging') {
             }
             includePatterns('**/*')
         }
-        shell("ansible-playbook -i '${AnsibleVars.INVENTORY_FILE}' -l staging site.yml")
+        shell("ansible-playbook -i '${AnsibleVars.INVENTORY_FILE}' -l dev site.yml")
     }
     publishers {
-        buildPipelineTrigger('ProvisionProd')
+        buildPipelineTrigger('ProvisionTest')
     }
 }

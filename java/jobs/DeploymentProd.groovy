@@ -1,23 +1,20 @@
 import util.AnsibleVars;
 import util.Pipeline;
 
-job('DeployDev') {
-    deliveryPipelineConfiguration('Dev', 'Deploy')
+job('ProdDeploy') {
+    deliveryPipelineConfiguration('Prod Env', 'Deploy')
     wrappers {
         buildName('$PIPELINE_VERSION')
     }
     Pipeline.checkOut(delegate)
     steps {
-        copyArtifacts('Build') {
+        copyArtifacts('CIBuild') {
             buildSelector() {
                 upstreamBuild(true)
             }
             includePatterns('**/*')
             flatten()
         }
-        shell("ansible-playbook -i '${AnsibleVars.INVENTORY_FILE}' -l dev deploy.yml")
-    }
-    publishers {
-        buildPipelineTrigger('DeployTest')
+        shell("ansible-playbook -i '${AnsibleVars.INVENTORY_FILE}' -l prod deploy.yml")
     }
 }
