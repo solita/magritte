@@ -8,7 +8,7 @@ job('StagingDeploy') {
     }
     Pipeline.checkOut(delegate)
     steps {
-        copyArtifacts('Build') {
+        copyArtifacts('CIBuild') {
             buildSelector() {
                 upstreamBuild(true)
             }

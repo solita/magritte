@@ -1,6 +1,6 @@
 ---
-- name: Configure continuous integration server
-  hosts: ci
+- name: Configure Jenkins
+  hosts: jenkins
 
   vars:
     java_packages:
@@ -81,7 +81,7 @@
         dest: jenkins_id_rsa.pub
         flat: yes
 
-- hosts: ci_root_access
+- hosts: jenkins_root_access
   tasks:
     - name: Give Jenkins root access to other hosts
       authorized_key: "user=root key='{{ item }}'"

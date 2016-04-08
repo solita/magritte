@@ -1,12 +1,12 @@
 import util.AnsibleVars;
 
-job('ProvisionProd') {
+job('ProdProvision') {
     deliveryPipelineConfiguration('Prod Env', 'Provision')
     wrappers {
         buildName('$PIPELINE_VERSION')
     }
     steps {
-        copyArtifacts('ProvisionCheckout') {
+        copyArtifacts('CICheckoutPipeline') {
             buildSelector() {
                 upstreamBuild(true)
             }

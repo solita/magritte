@@ -1,3 +1,6 @@
+import util.AnsibleVars;
+import util.Pipeline;
+
 job('CIBuild') {
     deliveryPipelineConfiguration('CI Env', 'Build')
     wrappers {
@@ -28,6 +31,27 @@ job('CIBuild') {
             pattern('stop')
             onlyIfSuccessful()
         }
-        downstream('DevDeploy', 'SUCCESS')
+        downstream('CIDeploy', 'SUCCESS')
+    }
+}
+
+job('CIDeploy') {
+    deliveryPipelineConfiguration('CI Env', 'Deploy')
+    wrappers {
+        buildName('$PIPELINE_VERSION')
+    }
+    Pipeline.checkOut(delegate)
+    steps {
+        copyArtifacts('CIBuild') {
+            buildSelector() {
+                upstreamBuild(true)
+            }
+            includePatterns('**/*')
+            flatten()
+        }
+        shell("ansible-playbook -i '${AnsibleVars.INVENTORY_FILE}' -l ci deploy.yml")
+    }
+    publishers {
+        buildPipelineTrigger('TestDeploy')
     }
 }

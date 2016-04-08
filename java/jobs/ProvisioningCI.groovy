@@ -1,7 +1,7 @@
 import util.Pipeline;
 import util.AnsibleVars;
 
-job('ProvisionCheckout') {
+job('CICheckoutPipeline') {
     deliveryPipelineConfiguration('CI Env', 'Checkout')
     wrappers {
         deliveryPipelineVersion('prov #$BUILD_NUMBER', true)
@@ -12,17 +12,17 @@ job('ProvisionCheckout') {
             pattern('**/*')
             onlyIfSuccessful()
         }
-        downstream('ProvisionCI', 'SUCCESS')
+        downstream('CIProvision', 'SUCCESS')
     }
 }
 
-job('ProvisionCI') {
+job('CIProvision') {
     deliveryPipelineConfiguration('CI Env', 'Provision')
     wrappers {
         buildName('$PIPELINE_VERSION')
     }
     steps {
-        copyArtifacts('ProvisionCheckout') {
+        copyArtifacts('CICheckoutPipeline') {
             buildSelector() {
                 upstreamBuild(true)
             }
@@ -31,6 +31,6 @@ job('ProvisionCI') {
         shell("ansible-playbook -i '${AnsibleVars.INVENTORY_FILE}' -l ci site.yml")
     }
     publishers {
-        downstream('ProvisionDev', 'SUCCESS')
+        buildPipelineTrigger('TestProvision')
     }
 }

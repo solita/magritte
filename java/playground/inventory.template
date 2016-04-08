@@ -1,21 +1,22 @@
-[ci]
-PROJECT-ci
+[jenkins]
+PROJECT-jenkins-ci
 
 [app]
-PROJECT-app-dev
+PROJECT-app-ci
 PROJECT-app-test
 PROJECT-app-staging
 PROJECT-app-prod
 
 [db]
-PROJECT-db-dev
+PROJECT-db-ci
 PROJECT-db-test
 PROJECT-db-staging
 PROJECT-db-prod
 
-[dev]
-PROJECT-app-dev
-PROJECT-db-dev
+[ci]
+PROJECT-jenkins-ci
+PROJECT-app-ci
+PROJECT-db-ci
 
 [test]
 PROJECT-app-test
@@ -29,13 +30,13 @@ PROJECT-db-staging
 PROJECT-app-prod
 PROJECT-db-prod
 
-[ci_root_access]
-PROJECT-ci
-PROJECT-app-dev
+[jenkins_root_access]
+PROJECT-jenkins-ci
+PROJECT-app-ci
 PROJECT-app-test
 PROJECT-app-staging
 PROJECT-app-prod
-PROJECT-db-dev
+PROJECT-db-ci
 PROJECT-db-test
 PROJECT-db-staging
 PROJECT-db-prod
