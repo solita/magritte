@@ -4,7 +4,7 @@ import util.AnsibleVars;
 job('CICheckoutPipeline') {
     deliveryPipelineConfiguration('CI Env', 'Checkout')
     wrappers {
-        deliveryPipelineVersion('prov #$BUILD_NUMBER', true)
+        deliveryPipelineVersion('checkout #$BUILD_NUMBER', true)
     }
     Pipeline.checkOut(delegate)
     publishers {
