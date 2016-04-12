@@ -57,6 +57,6 @@ job('Deployment/CI/Deploy') {
         shell("ansible-playbook -i '${AnsibleVars.INVENTORY_FILE}' -l ci deploy.yml")
     }
     publishers {
-        buildPipelineTrigger('Deployment/Test/Deploy')
+        buildPipelineTrigger('Deployment/QA/Deploy')
     }
 }

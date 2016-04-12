@@ -34,6 +34,6 @@ job('Provisioning/CI/Provision') {
         shell("ansible-playbook -i '${AnsibleVars.INVENTORY_FILE}' -l ci site.yml")
     }
     publishers {
-        buildPipelineTrigger('Provisioning/Test/Provision')
+        buildPipelineTrigger('Provisioning/QA/Provision')
     }
 }

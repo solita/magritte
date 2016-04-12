@@ -3,13 +3,13 @@ PROJECT-jenkins-ci
 
 [app]
 PROJECT-app-ci
-PROJECT-app-test
+PROJECT-app-qa
 PROJECT-app-staging
 PROJECT-app-prod
 
 [db]
 PROJECT-db-ci
-PROJECT-db-test
+PROJECT-db-qa
 PROJECT-db-staging
 PROJECT-db-prod
 
@@ -18,9 +18,9 @@ PROJECT-jenkins-ci
 PROJECT-app-ci
 PROJECT-db-ci
 
-[test]
-PROJECT-app-test
-PROJECT-db-test
+[qa]
+PROJECT-app-qa
+PROJECT-db-qa
 
 [staging]
 PROJECT-app-staging
@@ -33,11 +33,11 @@ PROJECT-db-prod
 [jenkins_root_access]
 PROJECT-jenkins-ci
 PROJECT-app-ci
-PROJECT-app-test
+PROJECT-app-qa
 PROJECT-app-staging
 PROJECT-app-prod
 PROJECT-db-ci
-PROJECT-db-test
+PROJECT-db-qa
 PROJECT-db-staging
 PROJECT-db-prod
 

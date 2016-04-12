@@ -1,10 +1,10 @@
 import util.AnsibleVars;
 
 folder('Provisioning')
-folder('Provisioning/Test')
+folder('Provisioning/QA')
 
-job('Provisioning/Test/Provision') {
-    deliveryPipelineConfiguration('Test Env', 'Provision')
+job('Provisioning/QA/Provision') {
+    deliveryPipelineConfiguration('QA Env', 'Provision')
     wrappers {
         buildName('$PIPELINE_VERSION')
     }
@@ -15,7 +15,7 @@ job('Provisioning/Test/Provision') {
             }
             includePatterns('**/*')
         }
-        shell("ansible-playbook -i '${AnsibleVars.INVENTORY_FILE}' -l test site.yml")
+        shell("ansible-playbook -i '${AnsibleVars.INVENTORY_FILE}' -l qa site.yml")
     }
     publishers {
         buildPipelineTrigger('Provisioning/Staging/Provision')

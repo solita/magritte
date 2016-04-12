@@ -2,10 +2,10 @@ import util.AnsibleVars;
 import util.Pipeline;
 
 folder('Deployment')
-folder('Deployment/Test')
+folder('Deployment/QA')
 
-job('Deployment/Test/Deploy') {
-    deliveryPipelineConfiguration('Test Env', 'Deploy')
+job('Deployment/QA/Deploy') {
+    deliveryPipelineConfiguration('QA Env', 'Deploy')
     wrappers {
         buildName('$PIPELINE_VERSION')
     }
@@ -18,7 +18,7 @@ job('Deployment/Test/Deploy') {
             includePatterns('**/*')
             flatten()
         }
-        shell("ansible-playbook -i '${AnsibleVars.INVENTORY_FILE}' -l test deploy.yml")
+        shell("ansible-playbook -i '${AnsibleVars.INVENTORY_FILE}' -l qa deploy.yml")
     }
     publishers {
         buildPipelineTrigger('Deployment/Staging/Deploy')
