@@ -1,14 +1,17 @@
 import util.AnsibleVars;
 import util.Pipeline;
 
-job('TestDeploy') {
+folder('Deployment')
+folder('Deployment/Test')
+
+job('Deployment/Test/Deploy') {
     deliveryPipelineConfiguration('Test Env', 'Deploy')
     wrappers {
         buildName('$PIPELINE_VERSION')
     }
     Pipeline.checkOut(delegate)
     steps {
-        copyArtifacts('CIBuild') {
+        copyArtifacts('Deployment/CI/Build') {
             buildSelector() {
                 upstreamBuild(true)
             }
@@ -18,6 +21,6 @@ job('TestDeploy') {
         shell("ansible-playbook -i '${AnsibleVars.INVENTORY_FILE}' -l test deploy.yml")
     }
     publishers {
-        buildPipelineTrigger('StagingDeploy')
+        buildPipelineTrigger('Deployment/Staging/Deploy')
     }
 }

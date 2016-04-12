@@ -1,12 +1,15 @@
 import util.AnsibleVars;
 
-job('ProdProvision') {
+folder('Provisioning')
+folder('Provisioning/Prod')
+
+job('Provisioning/Prod/Provision') {
     deliveryPipelineConfiguration('Prod Env', 'Provision')
     wrappers {
         buildName('$PIPELINE_VERSION')
     }
     steps {
-        copyArtifacts('CICheckoutPipeline') {
+        copyArtifacts('Provisioning/CI/Checkout') {
             buildSelector() {
                 upstreamBuild(true)
             }

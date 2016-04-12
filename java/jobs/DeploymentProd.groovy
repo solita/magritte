@@ -1,14 +1,17 @@
 import util.AnsibleVars;
 import util.Pipeline;
 
-job('ProdDeploy') {
+folder('Deployment')
+folder('Deployment/Prod')
+
+job('Deployment/Prod/Deploy') {
     deliveryPipelineConfiguration('Prod Env', 'Deploy')
     wrappers {
         buildName('$PIPELINE_VERSION')
     }
     Pipeline.checkOut(delegate)
     steps {
-        copyArtifacts('CIBuild') {
+        copyArtifacts('Deployment/CI/Build') {
             buildSelector() {
                 upstreamBuild(true)
             }

@@ -4,6 +4,6 @@ deliveryPipelineView('Provisioning Pipeline') {
     showAggregatedPipeline(true)
     allowRebuild(true)
     pipelines {
-        component('Provisioning', 'CICheckoutPipeline')
+        component('Provisioning', 'Provisioning/CI/Checkout')
     }
 }

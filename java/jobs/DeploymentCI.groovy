@@ -1,7 +1,10 @@
 import util.AnsibleVars;
 import util.Pipeline;
 
-job('CIBuild') {
+folder('Deployment')
+folder('Deployment/CI')
+
+job('Deployment/CI/Build') {
     deliveryPipelineConfiguration('CI Env', 'Build')
     wrappers {
         deliveryPipelineVersion('build #$BUILD_NUMBER', true)
@@ -12,7 +15,9 @@ job('CIBuild') {
                 url('https://github.com/noidi/hello-java.git')
             }
             branch('master')
-            clean()
+            extensions {
+                cleanAfterCheckout()
+            }
         }
     }
     triggers {
@@ -31,18 +36,18 @@ job('CIBuild') {
             pattern('stop')
             onlyIfSuccessful()
         }
-        downstream('CIDeploy', 'SUCCESS')
+        downstream('Deployment/CI/Deploy', 'SUCCESS')
     }
 }
 
-job('CIDeploy') {
+job('Deployment/CI/Deploy') {
     deliveryPipelineConfiguration('CI Env', 'Deploy')
     wrappers {
         buildName('$PIPELINE_VERSION')
     }
     Pipeline.checkOut(delegate)
     steps {
-        copyArtifacts('CIBuild') {
+        copyArtifacts('Deployment/CI/Build') {
             buildSelector() {
                 upstreamBuild(true)
             }
@@ -52,6 +57,6 @@ job('CIDeploy') {
         shell("ansible-playbook -i '${AnsibleVars.INVENTORY_FILE}' -l ci deploy.yml")
     }
     publishers {
-        buildPipelineTrigger('TestDeploy')
+        buildPipelineTrigger('Deployment/Test/Deploy')
     }
 }
