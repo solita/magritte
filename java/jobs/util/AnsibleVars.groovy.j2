@@ -5,4 +5,12 @@ class AnsibleVars {
 
     static final PIPELINE_REPO_URL = '{{ pipeline_repo_url | default("") }}';
     static final PIPELINE_PATH = '{{ pipeline_path | default("") }}';
+
+    static final APP_CI_HOSTS = [
+{% for h in groups["app"] | intersect(groups["ci"]) %}
+      "{{ hostvars[h]['ansible_host'] | default(h) }}",
+{% endfor %}
+    ];
 }
+
+// vim:ft=groovy

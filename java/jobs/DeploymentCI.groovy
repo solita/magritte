@@ -57,6 +57,29 @@ job('Deployment/CI/Deploy') {
         shell("ansible-playbook -i '${AnsibleVars.INVENTORY_FILE}' -l ci deploy.yml")
     }
     publishers {
+        downstream('Deployment/CI/E2ETest', 'SUCCESS')
+    }
+}
+
+job('Deployment/CI/E2ETest') {
+    deliveryPipelineConfiguration('CI Env', 'E2E Test')
+    wrappers {
+        buildName('$PIPELINE_VERSION')
+    }
+    Pipeline.checkOut(delegate)
+    steps {
+        copyArtifacts('Deployment/CI/Build') {
+            buildSelector() {
+                upstreamBuild(true)
+            }
+            includePatterns('**/*')
+            flatten()
+        }
+        AnsibleVars.APP_CI_HOSTS.each { host ->
+            shell("curl -s http://${host}:4567")
+        }
+    }
+    publishers {
         buildPipelineTrigger('Deployment/QA/Deploy')
     }
 }
