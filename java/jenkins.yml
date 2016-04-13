@@ -47,14 +47,14 @@
       register: requirements_yml
       tags: ansible
 
-    - name: Remove old Ansible plugins
+    - name: Remove old Ansible roles
       file:
         path: /etc/ansible/roles
         state: absent
       when: requirements_yml | changed
       tags: ansible
 
-    - name: Install Ansible plugins
+    - name: Install Ansible roles
       shell: ansible-galaxy install -r /etc/ansible/requirements.yml
       when: requirements_yml | changed
       tags: ansible
