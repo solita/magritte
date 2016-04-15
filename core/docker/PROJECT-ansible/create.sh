@@ -8,6 +8,7 @@ name="$(basename "$(pwd)")"
 
 if ! image_exists "$name"; then
   echo "Building image $name..."
+  ../../.pipeline-template/util/ensure-ssh-keys-generated
   cp ~/.ssh/id_rsa.pub .
   cp ../../requirements.yml .
   docker build -t $name .
