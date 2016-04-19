@@ -14,7 +14,7 @@ fi
 
 if ! container_exists "$name"; then
   echo "Creating container $name..."
-  docker create --name $name \
+  docker create -h $name --name $name \
     -v "$(cd ../.. && pwd):/pipeline" \
     -P \
     $name \
