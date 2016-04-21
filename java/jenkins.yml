@@ -32,6 +32,9 @@
     - solita.jenkins
 
   tasks:
+    - name: Install Git
+      apt: name=git state=installed
+
     - name: Install Python development tools (for Ansible)
       apt: name={{ item }} state=installed
       with_items:
@@ -67,9 +70,6 @@
       shell: ansible-galaxy install -r /etc/ansible/requirements.yml
       when: requirements_yml | changed
       tags: ansible
-
-    - name: Install Git
-      apt: name=git state=installed
 
     - name: Configure Git for Jenkins
       become: yes
