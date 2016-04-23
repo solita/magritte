@@ -48,7 +48,18 @@ for dir in "$project_dir" "$parent_dir"; do
   if [[ -d "$dir" ]]; then
     dir_full="$(cd "$dir" && pwd)"
     if [[ "$dir_full" == "$script_dir" || "$dir_full" == "$script_dir/"* ]]; then
-      echo "The directory '$script_dir' is for samples only. Can't create a new project here." >&2
+      echo "The directory '$script_dir' is for samples only." >&2
+      echo "Can't create a new project here." >&2
+      echo >&2
+      echo "Please give a path to the new project:" >&2
+      echo >&2
+      echo "    $0 $1 /path/to/your/project" >&2
+      echo >&2
+      echo "Or run this command from some other directory:" >&2
+      echo >&2
+      echo "    cd /where/you/want/it" >&2
+      echo "    '$script_dir/$(basename "$0")' $1 yourprojectname" >&2
+      echo >&2
       exit 1
     fi
   fi
