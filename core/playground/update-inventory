@@ -18,7 +18,7 @@ echo '#     playground/update-inventory                                         
 echo '#                                                                             #' >> inventory
 echo '###############################################################################' >> inventory
 echo >> inventory
-for name in $(find ../docker -mindepth 1 -type d -and -not -name PROJECT-ansible -printf '%P\n'); do
+for name in $(find ../docker -mindepth 1 -type d -and -not -name PROJECT-ansible -exec basename '{}' \;); do
   if container_running "$name"; then
     echo "$name ansible_user=root ansible_host=$(docker inspect -f "{{ .NetworkSettings.IPAddress }}" $name) ansible_ssh_extra_args=\"-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no\"" >> inventory
   fi

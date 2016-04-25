@@ -2,7 +2,7 @@
 set -eu
 
 script_dir="$(cd "$(dirname "$BASH_SOURCE")" && pwd)"
-samples="$(find "$script_dir" -mindepth 1 -maxdepth 1 -type d -not \( -name common -or -name .git \) -printf '%P\n')"
+samples="$(find "$script_dir" -mindepth 1 -maxdepth 1 -type d -not \( -name common -or -name .git \) -exec basename '{}' \;)"
 
 function in_list {
   for x in $1; do
