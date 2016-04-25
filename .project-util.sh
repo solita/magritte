@@ -16,8 +16,10 @@ function copy_project_directory {
       else
         local source_file="$x"
         local destination_file="$(echo "$destination/$x" | replace_project)"
+        # Copy the file, then overwrite. This is an easy, cross-platform way
+        # to preserve permissions.
+        cp "$source_file" "$destination_file"
         cat "$source_file" | replace_project >"$destination_file"
-        chmod --reference "$source_file" "$destination_file"
       fi
     done
   )
