@@ -35,12 +35,18 @@
     - name: Install Git
       apt: name=git state=installed
 
-    - name: Install Python development tools (for Ansible)
+    - name: Install Python development tools (for installing Ansible)
       apt: name={{ item }} state=installed
       with_items:
-        - python-pip
+        - python-setuptools
         - python-dev
+        - gcc
+        - libffi-dev
+        - libssl-dev
       tags: ansible
+
+    - name: Upgrade pip (for installing Ansible)
+      easy_install: name=pip state=latest
 
     - name: Install Ansible
       pip: name=ansible version=2.0.0.2
