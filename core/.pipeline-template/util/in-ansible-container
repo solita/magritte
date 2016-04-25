@@ -28,7 +28,7 @@ ssh-add -L >/dev/null 2>&1 || {
 ../../docker/PROJECT-ansible/start.sh
 
 docker_host="$(../../docker/host)"
-ansible_ssh_port="$(../../docker/port PROJECT-ansible 22 | sed -e 's/.\+://')"
+ansible_ssh_port="$(../../docker/port PROJECT-ansible 22 | cut -d : -f 2)"
 ssh \
   -o UserKnownHostsFile=/dev/null \
   -o StrictHostKeyChecking=no \
