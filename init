@@ -24,7 +24,7 @@ function list_available_samples {
 }
 
 if [[ $# -eq 0 ]]; then
-  echo "Usage: $0 SAMPLE [DIR] [NAME]" >&2
+  echo "Usage: $0 SAMPLE [DIR [NAME]]" >&2
   echo >&2
   echo "DIR defaults to the current directory. NAME defaults to DIR's name." >&2
   echo >&2
