@@ -1,4 +1,8 @@
-deliveryPipelineView('Provisioning Pipeline') {
+folder('Provisioning') {
+    primaryView('Pipeline')
+}
+
+deliveryPipelineView('Provisioning/Pipeline') {
     pipelineInstances(5)
     allowPipelineStart(true)
     enableManualTriggers(true)
