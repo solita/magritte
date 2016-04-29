@@ -21,6 +21,7 @@ job('Provisioning/CI/Checkout') {
 
 job('Provisioning/CI/Provision') {
     deliveryPipelineConfiguration('CI Env', 'Provision')
+    quietPeriod(0)
     wrappers {
         buildName('$PIPELINE_VERSION')
     }

@@ -5,6 +5,7 @@ folder('Provisioning/Prod')
 
 job('Provisioning/Prod/Provision') {
     deliveryPipelineConfiguration('Prod Env', 'Provision')
+    quietPeriod(0)
     wrappers {
         buildName('$PIPELINE_VERSION')
     }

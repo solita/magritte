@@ -6,6 +6,7 @@ folder('Deployment/QA')
 
 job('Deployment/QA/Deploy') {
     deliveryPipelineConfiguration('QA Env', 'Deploy')
+    quietPeriod(0)
     wrappers {
         buildName('$PIPELINE_VERSION')
     }

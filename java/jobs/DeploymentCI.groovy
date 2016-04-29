@@ -42,6 +42,7 @@ job('Deployment/CI/Build') {
 
 job('Deployment/CI/Deploy') {
     deliveryPipelineConfiguration('CI Env', 'Deploy')
+    quietPeriod(0)
     wrappers {
         buildName('$PIPELINE_VERSION')
     }
@@ -63,6 +64,7 @@ job('Deployment/CI/Deploy') {
 
 job('Deployment/CI/E2ETest') {
     deliveryPipelineConfiguration('CI Env', 'E2E Test')
+    quietPeriod(0)
     wrappers {
         buildName('$PIPELINE_VERSION')
     }

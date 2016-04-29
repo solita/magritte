@@ -5,6 +5,7 @@ folder('Provisioning/QA')
 
 job('Provisioning/QA/Provision') {
     deliveryPipelineConfiguration('QA Env', 'Provision')
+    quietPeriod(0)
     wrappers {
         buildName('$PIPELINE_VERSION')
     }
