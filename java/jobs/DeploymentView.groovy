@@ -1,4 +1,6 @@
 deliveryPipelineView('Deployment Pipeline') {
+    pipelineInstances(5)
+    allowPipelineStart(true)
     enableManualTriggers(true)
     allowRebuild(true)
     showAggregatedPipeline(true)
