@@ -17,7 +17,6 @@ if ! container_exists "$name"; then
   docker create -h $name --name $name \
     --stop-signal=SIGRTMIN+3 \
     --tmpfs /run \
-    --tmpfs /run/lock \
     -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
     -P \
     -t \

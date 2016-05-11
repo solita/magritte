@@ -18,7 +18,6 @@ if ! container_exists "$name"; then
     --security-opt seccomp=unconfined \
     --stop-signal=SIGRTMIN+3 \
     --tmpfs /run \
-    --tmpfs /run/lock \
     -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
     -v "$(cd ../.. && pwd):/pipeline" \
     -P \
