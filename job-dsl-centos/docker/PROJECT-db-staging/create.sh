@@ -15,6 +15,7 @@ fi
 if ! container_exists "$name"; then
   echo "Creating container $name..."
   docker create -h $name --name $name \
+    --security-opt seccomp=unconfined \
     --stop-signal=SIGRTMIN+3 \
     --tmpfs /run \
     -v /sys/fs/cgroup:/sys/fs/cgroup:ro \

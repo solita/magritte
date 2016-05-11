@@ -6,6 +6,6 @@
 [subrepo]
 	remote = git@github.com:solita/pipeline-template-job-dsl-centos.git
 	branch = master
-	commit = 704ceef669392d8ca2084095d29673896de9dac6
-	parent = d647e53d3b829dfa45334e9bfcbeb0a7c08b14e6
+	commit = caf0909941f40c33d9d27e7e7a0769df3be53241
+	parent = bd01e66751cd40efe0c5d4c4a1a7be59b6b6a6e5
 	cmdver = 0.3.0
