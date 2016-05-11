@@ -8,6 +8,7 @@ job('Provisioning/CI/Checkout') {
     deliveryPipelineConfiguration('CI Env', 'Checkout')
     wrappers {
         deliveryPipelineVersion('checkout #$BUILD_NUMBER', true)
+        timestamps()
     }
     Pipeline.checkOut(delegate)
     publishers {
@@ -24,6 +25,7 @@ job('Provisioning/CI/Provision') {
     quietPeriod(0)
     wrappers {
         buildName('$PIPELINE_VERSION')
+        timestamps()
     }
     steps {
         copyArtifacts('Provisioning/CI/Checkout') {

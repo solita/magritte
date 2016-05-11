@@ -9,6 +9,7 @@ job('Deployment/Staging/Deploy') {
     quietPeriod(0)
     wrappers {
         buildName('$PIPELINE_VERSION')
+        timestamps()
     }
     Pipeline.checkOut(delegate)
     steps {

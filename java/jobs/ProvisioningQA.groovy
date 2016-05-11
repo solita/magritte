@@ -8,6 +8,7 @@ job('Provisioning/QA/Provision') {
     quietPeriod(0)
     wrappers {
         buildName('$PIPELINE_VERSION')
+        timestamps()
     }
     steps {
         copyArtifacts('Provisioning/CI/Checkout') {

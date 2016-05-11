@@ -12,6 +12,7 @@
       - delivery-pipeline-plugin
       - build-name-setter
       - cloudbees-folder
+      - timestamper
     remote_pipeline_root_dir: "/var/lib/jenkins/pipelines"
     remote_pipeline_dir: "{{ remote_pipeline_root_dir }}/{{ lookup('file', playbook_dir + '/.pipeline-template/project-name/') }}"
 

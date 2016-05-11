@@ -8,6 +8,7 @@ job('Deployment/CI/Build') {
     deliveryPipelineConfiguration('CI Env', 'Build')
     wrappers {
         deliveryPipelineVersion('build #$BUILD_NUMBER', true)
+        timestamps()
     }
     scm {
         git {
@@ -45,6 +46,7 @@ job('Deployment/CI/Deploy') {
     quietPeriod(0)
     wrappers {
         buildName('$PIPELINE_VERSION')
+        timestamps()
     }
     Pipeline.checkOut(delegate)
     steps {
@@ -67,6 +69,7 @@ job('Deployment/CI/E2ETest') {
     quietPeriod(0)
     wrappers {
         buildName('$PIPELINE_VERSION')
+        timestamps()
     }
     Pipeline.checkOut(delegate)
     steps {
