@@ -1,0 +1,11 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = git@github.com:solita/pipeline-template-job-dsl-centos.git
+	branch = master
+	commit = 704ceef669392d8ca2084095d29673896de9dac6
+	parent = d647e53d3b829dfa45334e9bfcbeb0a7c08b14e6
+	cmdver = 0.3.0
