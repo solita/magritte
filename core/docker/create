@@ -2,8 +2,12 @@
 set -eu
 cd "$(dirname "$BASH_SOURCE")"
 
-for d in */; do
-  if [[ -f "${d}create.sh" ]]; then
-    "${d}create.sh"
-  fi
-done
+if [[ $# -eq 0 ]]; then
+  for d in */; do
+    if [[ -f "${d}create.sh" ]]; then
+      "${d}create.sh"
+    fi
+  done
+else
+  "$1/create.sh"
+fi

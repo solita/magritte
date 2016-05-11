@@ -2,8 +2,12 @@
 set -eu
 cd "$(dirname "$BASH_SOURCE")"
 
-for d in */; do
-  if [[ -f "${d}start.sh" ]]; then
-    "${d}start.sh"
-  fi
-done
+if [[ $# -eq 0 ]]; then
+  for d in */; do
+    if [[ -f "${d}start.sh" ]]; then
+      "${d}start.sh"
+    fi
+  done
+else
+  "$1/start.sh"
+fi
