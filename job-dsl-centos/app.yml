@@ -4,11 +4,7 @@
 
   vars:
     java_packages:
-      - openjdk-8-jdk
-
-  pre_tasks:
-    - name: Add OpenJDK PPA (for Java 8)
-      apt_repository: repo="ppa:openjdk-r/ppa"
+      - java-1.8.0-openjdk
 
   roles:
     - geerlingguy.java
