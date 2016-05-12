@@ -103,11 +103,11 @@ echo ' 1. Change to the project directory:'
 echo
 echo "        cd $project_dir"
 echo
-echo ' 2. Start the playground containers:'
+echo ' 2. Start the Docker containers:'
 echo
 echo '        docker/start'
 echo
-echo " 3. Configure the playground:"
+echo " 3. Configure the containers:"
 echo
 echo '        ./ansible-playbook site.yml'
 echo

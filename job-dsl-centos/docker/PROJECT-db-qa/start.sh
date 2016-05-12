@@ -10,5 +10,5 @@ if ! container_running "$name"; then
   ./create.sh
   echo "Starting container $name..."
   docker start "$name" >/dev/null
-  ../../playground/update-inventory
+  ../../imagination/update-inventory
 fi
