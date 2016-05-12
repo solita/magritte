@@ -88,7 +88,21 @@ else
   mkdir -p "$project_dir"
 fi
 
-project_name="${3:-$(basename "$(cd "$project_dir" && pwd)")}"
+project_name="${3:-$(basename "$(cd "$project_dir" && pwd)" | sed -e 's/[ _]/-/g')}"
+
+if echo "$project_name" | LANG=C grep '[^[:alnum:]-]' >/dev/null; then
+  echo "'$project_name' is not a valid project name!" >&2
+  echo >&2
+  echo 'The project name may only contain the following characters:' >&2
+  echo >&2
+  echo '  - Letters: a-z and A-Z' >&2
+  echo >&2
+  echo '  - Numbers: 0-9' >&2
+  echo >&2
+  echo '  - Hyphens: -' >&2
+  echo >&2
+  exit 1
+fi
 
 source "$script_dir/.project-util.sh"
 copy_project_directory "$script_dir/core" "$project_dir"
@@ -101,7 +115,7 @@ echo 'Next steps:'
 echo
 echo ' 1. Change to the project directory:'
 echo
-echo "        cd $project_dir"
+echo "        cd '$project_dir'"
 echo
 echo ' 2. Start the Docker containers:'
 echo
