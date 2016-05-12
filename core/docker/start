@@ -2,6 +2,9 @@
 set -eu
 cd "$(dirname "$BASH_SOURCE")"
 
+echo 'Configuring the Docker host for running systemd containers...'
+../.magritte/util/systemd-container-host-config >/dev/null
+
 if [[ $# -eq 0 ]]; then
   for d in */; do
     if [[ -f "${d}start.sh" ]]; then
