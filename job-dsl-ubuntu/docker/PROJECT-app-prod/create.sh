@@ -2,7 +2,7 @@
 set -eu
 
 cd "$(dirname "$BASH_SOURCE")"
-source ../../.pipeline-template/util/docker.sh
+source ../../.magritte/util/docker.sh
 
 name="$(basename "$(pwd)")"
 

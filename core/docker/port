@@ -2,7 +2,7 @@
 set -eu
 cd "$(dirname "$BASH_SOURCE")"
 
-source ../.pipeline-template/util/docker.sh
+source ../.magritte/util/docker.sh
 
 function replace_host {
   sed -e "s/0\\.0\\.0\\.0/$(./host)/g"

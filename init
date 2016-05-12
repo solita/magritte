@@ -92,7 +92,7 @@ project_name="${3:-$(basename "$(cd "$project_dir" && pwd)")}"
 
 source "$script_dir/.project-util.sh"
 copy_project_directory "$script_dir/core" "$project_dir"
-copy_project_directory "$script_dir/core/.pipeline-template" "$project_dir/.pipeline-template"
+copy_project_directory "$script_dir/core/.magritte" "$project_dir/.magritte"
 copy_project_directory "$script_dir/$sample" "$project_dir"
 
 echo "Project $project_name created successfully!"
