@@ -37,5 +37,4 @@ ssh \
   -A \
   "ansible@$docker_host" \
   -p "$ansible_ssh_port" \
-  "cd /project && $@" \
-  2>&1 | grep -vF "Connection to $docker_host closed."
+  "cd /project && $@"
