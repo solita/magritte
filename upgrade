@@ -3,7 +3,7 @@ set -eu
 
 script_dir="$(cd "$(dirname "$BASH_SOURCE")" && pwd)"
 
-project_dir="${1:-.}"
+project_dir="${1:-"$(pwd)"}"
 
 if [[ ! -d "$project_dir/.magritte" ]]; then
   echo "The directory '$project_dir' does not look like a Magritte project. Not upgrading." >&2
