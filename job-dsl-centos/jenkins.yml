@@ -35,6 +35,7 @@
   tasks:
     - name: Install Git
       yum: name=git state=installed
+      tags: ansible
 
     - name: Install Python development tools (for installing Ansible)
       yum: name={{ item }} state=installed
@@ -46,15 +47,16 @@
         - openssl-devel
       tags: ansible
 
-    - name: Upgrade pip (for installing Ansible)
+    - name: Install latest pip (for installing Ansible)
       easy_install: name=pip state=latest
+      tags: ansible
 
-    - name: Upgrade setuptools (for installing Ansible)
+    - name: Install latest setuptools (for installing Ansible)
       pip: name=setuptools state=latest
       tags: ansible
 
     - name: Install Ansible
-      pip: name=ansible version=2.0.0.2
+      pip: name=ansible version=2.0.2.0
       tags: ansible
 
     - name: Create Ansible configuration directory
