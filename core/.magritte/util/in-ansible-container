@@ -27,6 +27,16 @@ ssh-add -L >/dev/null 2>&1 || {
 
 ../../docker/PROJECT-ansible/start.sh
 
+# By default, Ansible leaves master connections open for 60s of idle time.
+# Sometimes these master connections keep the connection to our ssh-agent open,
+# which prevents our SSH connection (running ansible or ansible-playbook) from
+# being closed. This results in up to 60s of idle waiting at the end of an
+# Ansible command before the control returns back to the local shell.
+#
+# To work around this, at the end of our command we walk the list of Ansible's
+# SSH control sockets (/home/ansible/.ansible/cp/*) and close all the
+# connections associated with them.
+
 docker_host="$(../../docker/host)"
 ansible_ssh_port="$(../../docker/port PROJECT-ansible 22 | cut -d : -f 2)"
 ssh \
@@ -37,4 +47,4 @@ ssh \
   -A \
   "ansible@$docker_host" \
   -p "$ansible_ssh_port" \
-  "cd /project && $@"
+  "cd /project && $@; for cs in /home/ansible/.ansible/cp/*; do ssh -O exit -S \$cs . 2>/dev/null; done"
