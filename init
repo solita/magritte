@@ -121,9 +121,11 @@ echo ' 2. Start the Docker containers:'
 echo
 echo '        docker/start'
 echo
-echo " 3. Configure the containers:"
+echo " 3. Configure the containers in all environments:"
 echo
-echo '        ./ansible-playbook site.yml'
+echo '        for i in imagination/*/inventory; do'
+echo '            ./ansible-playbook -i $i site.yml'
+echo '        done'
 echo
 echo " 4. See where you can access your services:"
 echo

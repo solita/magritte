@@ -23,7 +23,7 @@ if ! container_exists "$name"; then
     --tmpfs /run/lock \
     -v /sys/fs/cgroup:/sys/fs/cgroup:ro \
     -t \
-    -v "$(cd ../.. && pwd):/project" \
+    -v "$(cd ../.. && pwd):/pipeline" \
     -P \
     $name \
     >/dev/null
