@@ -1,7 +1,7 @@
 package util;
 
 class AnsibleVars {
-    static final INVENTORY_ROOT = '{{ ((inventory_file | dirname) + "/..") | realpath }}';
+    static final INVENTORY_ROOT = '{{ inventory_root }}';
 
     static final PIPELINE_REPO_URL = '{{ pipeline_repo_url | default("") }}';
     static final PIPELINE_PATH = '{{ pipeline_path | default("") }}';
