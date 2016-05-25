@@ -16,7 +16,7 @@ function list_available_project_skeletons {
   (
     cd "$script_dir"
     for s in *; do
-      if [[ -d "$s" && "$s" != 'core' ]]; then
+      if [[ -d "$s" && "$s" != 'core' && "$s" != 'doc' ]]; then
         echo "  - $s: $(cat "$script_dir/$s/.description")"
       fi
     done
