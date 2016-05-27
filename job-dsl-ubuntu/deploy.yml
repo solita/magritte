@@ -26,7 +26,3 @@
       become: yes
       become_user: "{{ app_user }}"
       command: "'{{ app_dir }}/start' creates='{{ app_pid }}'"
-
-    - name: Wait that Front can access Tomcat port 8080
-      wait_for: host={{ ansible_default_ipv4.address }} port=8080 timeout=600 delay=10
-      delegate_to: "{{ groups['front'][0] }}"
