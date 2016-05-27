@@ -4,8 +4,8 @@
 ; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
 ;
 [subrepo]
-	remote = git@github.com:solita/magritte-job-dsl-centos.git
-	branch = master
+	remote = git@github.com:solita/magritte-job-dsl.git
+	branch = centos
 	commit = 09e7f24d9a4532be4a6cd169b24dd508a7b6216a
 	parent = e1b0b11d602eed0520a00901a2196966fb0dc4a8
 	cmdver = 0.3.0
