@@ -73,13 +73,6 @@ job('Deployment/CI/E2ETest') {
     }
     Pipeline.checkOut(delegate)
     steps {
-        copyArtifacts('Deployment/CI/Build') {
-            buildSelector() {
-                upstreamBuild(true)
-            }
-            includePatterns('**/*')
-            flatten()
-        }
         AnsibleVars.APP_HOSTS.each { host ->
             shell("curl -s http://${host}:4567")
         }
