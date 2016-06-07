@@ -73,7 +73,7 @@ job('Deployment/CI/E2ETest') {
     }
     Pipeline.checkOut(delegate)
     steps {
-        AnsibleVars.APP_HOSTS.each { host ->
+        AnsibleVars.CI_APP_HOSTS.each { host ->
             shell("curl -s http://${host}:4567")
         }
     }
