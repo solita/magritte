@@ -2,7 +2,7 @@
 set -eu
 
 script_dir="$(cd "$(dirname "$BASH_SOURCE")" && pwd)"
-project_skeletons="$(find "$script_dir" -mindepth 1 -maxdepth 1 -type d -not \( -name common -or -name .git \) -exec basename '{}' \;)"
+project_skeletons="$(find "$script_dir" -mindepth 1 -maxdepth 1 -type d -not \( -name common -or -name .git -or -name test \) -exec basename '{}' \;)"
 
 function in_list {
   for x in $1; do
