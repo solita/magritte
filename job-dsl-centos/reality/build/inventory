@@ -3,14 +3,11 @@
 # with ansible_ssh_user=root.
 jenkins.ci.example.com ansible_ssh_user=root
 
-[jenkins]
+[ci]
 jenkins.ci.example.com
 
 [app]
 # List your app hosts here.
-
-[db]
-# List your db hosts here.
 
 [jenkins_root_access]
 jenkins.ci.example.com
