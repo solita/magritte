@@ -34,7 +34,7 @@ job('Provisioning/Build/Provision') {
             }
             includePatterns('**/*')
         }
-        shell("ansible-playbook -i '${AnsibleVars.INVENTORY_ROOT}/build/inventory' site.yml")
+        shell("ansible-playbook -i '${AnsibleVars.INVENTORY_ROOT}/build/inventory' site.yml -e '{solita_jenkins_restart: no}'")
     }
     publishers {
         archiveArtifacts {
