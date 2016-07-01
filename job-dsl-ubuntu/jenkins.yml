@@ -22,15 +22,6 @@
     - name: Add OpenJDK PPA (for Java 8)
       apt_repository: repo="ppa:openjdk-r/ppa"
 
-    # Work around https://github.com/geerlingguy/ansible-role-jenkins/issues/47
-    - name: Fetch Jenkins 1.658
-      get_url:
-        url: http://pkg.jenkins-ci.org/debian/binary/jenkins_1.658_all.deb
-        dest: /tmp/jenkins_1.658_all.deb
-
-    - name: Install Jenkins 1.658
-      apt: deb=/tmp/jenkins_1.658_all.deb
-
   roles:
     - name: solita.jenkins
       tags: jenkins
