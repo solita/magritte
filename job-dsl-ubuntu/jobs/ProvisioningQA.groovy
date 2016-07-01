@@ -27,6 +27,6 @@ job('Provisioning/QA/Provision') {
         shell("ansible-playbook -i '${AnsibleVars.INVENTORY_ROOT}/qa/inventory' site.yml")
     }
     publishers {
-        buildPipelineTrigger('Provisioning/Staging/Provision')
+        buildPipelineTrigger('Provisioning/Prod/Provision')
     }
 }

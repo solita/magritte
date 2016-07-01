@@ -1,7 +1,0 @@
-[app]
-PROJECT-app-staging
-
-[jenkins_root_access]
-PROJECT-app-staging
-
-# vim: ft=dosini

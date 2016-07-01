@@ -23,6 +23,6 @@ job('Deployment/QA/Deploy') {
         shell("ansible-playbook -i '${AnsibleVars.INVENTORY_ROOT}/qa/inventory' deploy.yml")
     }
     publishers {
-        buildPipelineTrigger('Deployment/Staging/Deploy')
+        buildPipelineTrigger('Deployment/Prod/Deploy')
     }
 }
