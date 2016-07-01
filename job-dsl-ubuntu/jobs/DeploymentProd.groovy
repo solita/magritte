@@ -10,6 +10,7 @@ job('Deployment/Prod/Deploy') {
     wrappers {
         buildName('$PIPELINE_VERSION')
         timestamps()
+        preBuildCleanup()
     }
     Pipeline.checkOut(delegate)
     steps {

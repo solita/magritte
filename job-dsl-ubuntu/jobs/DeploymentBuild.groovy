@@ -47,6 +47,7 @@ job('Deployment/Build/Deploy') {
     wrappers {
         buildName('$PIPELINE_VERSION')
         timestamps()
+        preBuildCleanup()
     }
     Pipeline.checkOut(delegate)
     steps {
@@ -70,6 +71,7 @@ job('Deployment/Build/E2ETest') {
     wrappers {
         buildName('$PIPELINE_VERSION')
         timestamps()
+        preBuildCleanup()
     }
     Pipeline.checkOut(delegate)
     steps {

@@ -9,6 +9,7 @@ job('Provisioning/Build/Checkout') {
     wrappers {
         deliveryPipelineVersion('checkout #$BUILD_NUMBER', true)
         timestamps()
+        preBuildCleanup()
     }
     Pipeline.checkOut(delegate)
     publishers {
@@ -26,6 +27,9 @@ job('Provisioning/Build/Provision') {
     wrappers {
         buildName('$PIPELINE_VERSION')
         timestamps()
+        preBuildCleanup {
+            excludePattern("${AnsibleVars.INVENTORY_ROOT}/build/solita_jenkins_default_password/solita_jenkins")
+        }
     }
     steps {
         copyArtifacts('Provisioning/Build/Checkout') {
