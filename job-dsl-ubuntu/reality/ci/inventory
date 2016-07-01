@@ -9,9 +9,6 @@ jenkins.ci.example.com
 [app]
 # List your app hosts here.
 
-[db]
-# List your db hosts here.
-
 [jenkins_root_access]
 jenkins.ci.example.com
 # List all the hosts that you want to provision from Jenkins here.
