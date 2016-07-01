@@ -30,6 +30,7 @@ job('Provisioning/Build/Provision') {
         preBuildCleanup {
             excludePattern("${AnsibleVars.INVENTORY_ROOT}/build/solita_jenkins_default_password/solita_jenkins")
         }
+        colorizeOutput()
     }
     steps {
         copyArtifacts('Provisioning/Build/Checkout') {
@@ -38,7 +39,7 @@ job('Provisioning/Build/Provision') {
             }
             includePatterns('**/*')
         }
-        shell("ansible-playbook -i '${AnsibleVars.INVENTORY_ROOT}/build/inventory' site.yml -e '{solita_jenkins_restart: no}'")
+        shell("env ANSIBLE_FORCE_COLOR=true ansible-playbook -i '${AnsibleVars.INVENTORY_ROOT}/build/inventory' site.yml -e '{solita_jenkins_restart: no}'")
     }
     publishers {
         archiveArtifacts {

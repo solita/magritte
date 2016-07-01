@@ -11,6 +11,7 @@ job('Deployment/QA/Deploy') {
         buildName('$PIPELINE_VERSION')
         timestamps()
         preBuildCleanup()
+        colorizeOutput()
     }
     Pipeline.checkOut(delegate)
     steps {
@@ -21,7 +22,7 @@ job('Deployment/QA/Deploy') {
             includePatterns('**/*')
             flatten()
         }
-        shell("ansible-playbook -i '${AnsibleVars.INVENTORY_ROOT}/qa/inventory' deploy.yml")
+        shell("env ANSIBLE_FORCE_COLOR=true ansible-playbook -i '${AnsibleVars.INVENTORY_ROOT}/qa/inventory' deploy.yml")
     }
     publishers {
         buildPipelineTrigger('Deployment/Prod/Deploy')

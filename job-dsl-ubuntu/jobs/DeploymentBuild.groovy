@@ -48,6 +48,7 @@ job('Deployment/Build/Deploy') {
         buildName('$PIPELINE_VERSION')
         timestamps()
         preBuildCleanup()
+        colorizeOutput()
     }
     Pipeline.checkOut(delegate)
     steps {
@@ -58,7 +59,7 @@ job('Deployment/Build/Deploy') {
             includePatterns('**/*')
             flatten()
         }
-        shell("ansible-playbook -i '${AnsibleVars.INVENTORY_ROOT}/build/inventory' deploy.yml")
+        shell("env ANSIBLE_FORCE_COLOR=true ansible-playbook -i '${AnsibleVars.INVENTORY_ROOT}/build/inventory' deploy.yml")
     }
     publishers {
         downstream('Deployment/Build/E2ETest', 'SUCCESS')

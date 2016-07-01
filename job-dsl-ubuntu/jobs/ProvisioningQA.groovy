@@ -10,6 +10,7 @@ job('Provisioning/QA/Provision') {
         buildName('$PIPELINE_VERSION')
         timestamps()
         preBuildCleanup()
+        colorizeOutput()
     }
     steps {
         copyArtifacts('Provisioning/Build/Checkout') {
@@ -24,7 +25,7 @@ job('Provisioning/QA/Provision') {
             }
             includePatterns('imagination/jenkins_id_rsa.pub')
         }
-        shell("ansible-playbook -i '${AnsibleVars.INVENTORY_ROOT}/qa/inventory' site.yml")
+        shell("env ANSIBLE_FORCE_COLOR=true ansible-playbook -i '${AnsibleVars.INVENTORY_ROOT}/qa/inventory' site.yml")
     }
     publishers {
         buildPipelineTrigger('Provisioning/Prod/Provision')

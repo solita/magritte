@@ -15,6 +15,7 @@
       - cloudbees-folder
       - timestamper
       - ws-cleanup
+      - ansicolor
 
     solita_ansible_version: 2.1.0.0
 
