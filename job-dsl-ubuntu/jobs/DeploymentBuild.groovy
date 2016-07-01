@@ -2,10 +2,10 @@ import util.AnsibleVars;
 import util.Pipeline;
 
 folder('Deployment')
-folder('Deployment/CI')
+folder('Deployment/Build')
 
-job('Deployment/CI/Build') {
-    deliveryPipelineConfiguration('CI Env', 'Build')
+job('Deployment/Build/Build') {
+    deliveryPipelineConfiguration('Build Env', 'Build')
     wrappers {
         deliveryPipelineVersion('build #$BUILD_NUMBER', true)
         timestamps()
@@ -37,12 +37,12 @@ job('Deployment/CI/Build') {
             pattern('stop')
             onlyIfSuccessful()
         }
-        downstream('Deployment/CI/Deploy', 'SUCCESS')
+        downstream('Deployment/Build/Deploy', 'SUCCESS')
     }
 }
 
-job('Deployment/CI/Deploy') {
-    deliveryPipelineConfiguration('CI Env', 'Deploy')
+job('Deployment/Build/Deploy') {
+    deliveryPipelineConfiguration('Build Env', 'Deploy')
     quietPeriod(0)
     wrappers {
         buildName('$PIPELINE_VERSION')
@@ -50,22 +50,22 @@ job('Deployment/CI/Deploy') {
     }
     Pipeline.checkOut(delegate)
     steps {
-        copyArtifacts('Deployment/CI/Build') {
+        copyArtifacts('Deployment/Build/Build') {
             buildSelector() {
                 upstreamBuild(true)
             }
             includePatterns('**/*')
             flatten()
         }
-        shell("ansible-playbook -i '${AnsibleVars.INVENTORY_ROOT}/ci/inventory' deploy.yml")
+        shell("ansible-playbook -i '${AnsibleVars.INVENTORY_ROOT}/build/inventory' deploy.yml")
     }
     publishers {
-        downstream('Deployment/CI/E2ETest', 'SUCCESS')
+        downstream('Deployment/Build/E2ETest', 'SUCCESS')
     }
 }
 
-job('Deployment/CI/E2ETest') {
-    deliveryPipelineConfiguration('CI Env', 'E2E Test')
+job('Deployment/Build/E2ETest') {
+    deliveryPipelineConfiguration('Build Env', 'E2E Test')
     quietPeriod(0)
     wrappers {
         buildName('$PIPELINE_VERSION')
@@ -74,7 +74,7 @@ job('Deployment/CI/E2ETest') {
     Pipeline.checkOut(delegate)
     steps {
         // Wait for the app server to start
-        AnsibleVars.CI_APP_HOSTS.each { host ->
+        AnsibleVars.BUILD_APP_HOSTS.each { host ->
             shell("""\
             for i in \$(seq 10); do
                 curl -s http://${host}:4567 && exit 0

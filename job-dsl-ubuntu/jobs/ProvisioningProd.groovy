@@ -12,17 +12,17 @@ job('Provisioning/Prod/Provision') {
         preBuildCleanup()
     }
     steps {
-        copyArtifacts('Provisioning/CI/Checkout') {
+        copyArtifacts('Provisioning/Build/Checkout') {
             buildSelector() {
                 upstreamBuild(true)
             }
             includePatterns('**/*')
         }
-        copyArtifacts('Provisioning/CI/Provision') {
+        copyArtifacts('Provisioning/Build/Provision') {
             buildSelector() {
                 upstreamBuild(true)
             }
-            includePatterns('jenkins_id_rsa.pub')
+            includePatterns('imagination/jenkins_id_rsa.pub')
         }
         shell("ansible-playbook -i '${AnsibleVars.INVENTORY_ROOT}/prod/inventory' site.yml")
     }

@@ -3,7 +3,7 @@
 # with ansible_ssh_user=root.
 jenkins.ci.example.com ansible_ssh_user=root
 
-[jenkins]
+[ci]
 jenkins.ci.example.com
 
 [app]

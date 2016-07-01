@@ -2,10 +2,10 @@ import util.Pipeline;
 import util.AnsibleVars;
 
 folder('Provisioning')
-folder('Provisioning/CI')
+folder('Provisioning/Build')
 
-job('Provisioning/CI/Checkout') {
-    deliveryPipelineConfiguration('CI Env', 'Checkout')
+job('Provisioning/Build/Checkout') {
+    deliveryPipelineConfiguration('Build Env', 'Checkout')
     wrappers {
         deliveryPipelineVersion('checkout #$BUILD_NUMBER', true)
         timestamps()
@@ -16,29 +16,29 @@ job('Provisioning/CI/Checkout') {
             pattern('**/*')
             onlyIfSuccessful()
         }
-        downstream('Provisioning/CI/Provision', 'SUCCESS')
+        downstream('Provisioning/Build/Provision', 'SUCCESS')
     }
 }
 
-job('Provisioning/CI/Provision') {
-    deliveryPipelineConfiguration('CI Env', 'Provision')
+job('Provisioning/Build/Provision') {
+    deliveryPipelineConfiguration('Build Env', 'Provision')
     quietPeriod(0)
     wrappers {
         buildName('$PIPELINE_VERSION')
         timestamps()
     }
     steps {
-        copyArtifacts('Provisioning/CI/Checkout') {
+        copyArtifacts('Provisioning/Build/Checkout') {
             buildSelector() {
                 upstreamBuild(true)
             }
             includePatterns('**/*')
         }
-        shell("ansible-playbook -i '${AnsibleVars.INVENTORY_ROOT}/ci/inventory' site.yml")
+        shell("ansible-playbook -i '${AnsibleVars.INVENTORY_ROOT}/build/inventory' site.yml")
     }
     publishers {
         archiveArtifacts {
-            pattern('jenkins_id_rsa.pub')
+            pattern('imagination/jenkins_id_rsa.pub')
             onlyIfSuccessful()
         }
         buildPipelineTrigger('Provisioning/QA/Provision')
