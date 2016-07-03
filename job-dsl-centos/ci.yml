@@ -57,6 +57,7 @@
     - name: Create user jenkins
       user:
         name: jenkins
+        shell: /bin/bash
 
     - name: Give jenkins sudo permissions
       copy:
