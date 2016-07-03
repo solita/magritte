@@ -1,6 +1,7 @@
 ---
 - name: Configure Jenkins
   hosts: ci
+  become: yes
 
   vars:
     java_packages:
@@ -32,9 +33,10 @@
 
   tasks:
     - name: Configure Git for Jenkins
-      become: yes
-      become_user: jenkins
-      command: "git config --global '{{ item.k }}' '{{ item.v }}'"
+      git_config:
+        scope: global
+        name: "{{ item.k }}"
+        value: "{{ item.v }}"
       with_items:
         - { k: user.name, v: Jenkins }
         - { k: user.email, v: jenkins@example.com }
@@ -51,9 +53,22 @@
         dest: "{{ inventory_dir }}/../jenkins_id_rsa.pub"
         flat: yes
 
-- hosts: jenkins_root_access
+- name: Give Jenkins sudo access
+  hosts: ci_sudo_access
+  become: yes
+
   tasks:
-    - name: Give Jenkins root access to other hosts
-      authorized_key: "user=root key='{{ item }}'"
+    - name: Create user jenkins
+      user:
+        name: jenkins
+
+    - name: Give jenkins sudo permissions
+      copy:
+        dest: /etc/sudoers.d/jenkins
+        content: "jenkins ALL = (ALL:ALL) NOPASSWD: ALL"
+        validate: visudo -cf %s
+
+    - name: Allow Jenkins to log in as jenkins
+      authorized_key: "user=jenkins key='{{ item }}'"
       with_file:
         - "{{ inventory_dir }}/../jenkins_id_rsa.pub"
