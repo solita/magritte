@@ -7,6 +7,9 @@
     java_packages:
       - openjdk-8-jdk
 
+    solita_jenkins_users:
+      - user
+
     solita_jenkins_plugins:
       - git
       - copyartifact
