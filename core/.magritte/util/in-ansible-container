@@ -12,7 +12,7 @@ require_ssh_keys || exit $?
 # couldn't control ownership and permissions and SSH checks them.
 if [[ -f ~/.ssh/config ]]; then
   docker cp -L ~/.ssh/config PROJECT-ansible:/home/ansible/.ssh/config
-  docker exec PROJECT-ansible bash -c 'chown ansible:ansible /home/ansible/.ssh/config && chmod 600 /home/ansible/.ssh/config'
+  docker exec PROJECT-ansible bash -c 'chown -R ansible:ansible /home/ansible/.ssh && chmod 700 /home/ansible/.ssh && chmod 600 /home/ansible/.ssh/config'
 else
   docker exec PROJECT-ansible rm /home/ansible/.ssh/config
 fi
