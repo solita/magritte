@@ -1,0 +1,14 @@
+---
+- hosts: all
+  become: yes
+
+  tasks:
+    # This makes the SSH keys added to ssh-agent available to tasks run with
+    # "become: yes" and commands run with sudo.
+    - name: Keep SSH agent socket when using sudo
+      copy:
+        dest: /etc/sudoers.d/ssh_auth_sock
+        content: >
+          Defaults env_keep+=SSH_AUTH_SOCK
+        validate: visudo -cf %s
+      tags: sudo_ssh_auth_sock
