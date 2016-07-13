@@ -1,2 +1,4 @@
+---
+- include: common.yml
 - include: app.yml
 - include: ci.yml
